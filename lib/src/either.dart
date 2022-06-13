@@ -81,7 +81,7 @@ class _IsLeftOf extends Matcher {
   const _IsLeftOf(this._expected);
   @override
   bool matches(Object? item, Map matchState) =>
-      (item as Either).fold((l) => l == _expected, (r) => false);
+      (item as Either).fold((l) => l == _expected, (_) => false);
 
   @override
   Description describe(Description description) => description
@@ -113,11 +113,12 @@ extension EitherX<L, R> on Either<L, R> {
   /// Returns the right value of an [Either], or fails the test.
   ///
   /// To use only in tests.
-  R getRight() => getOrElse(() => throw TestFailure('Either should be right'));
+  R getRightOrFailTest() =>
+      getOrElse(() => throw TestFailure('Either should be right'));
 
   /// Returns the left value of an [Either], or fails the test.
   ///
   /// To use only in tests.
-  L getLeft() =>
+  L getLeftOrFailTest() =>
       swap().getOrElse(() => throw TestFailure('Either should be left'));
 }

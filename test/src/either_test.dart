@@ -3,18 +3,7 @@ import 'package:dartz_test/src/either.dart';
 import 'package:test/test.dart';
 import 'package:dartz/dartz.dart';
 
-// To check the use of == and not only 'identical'
-class Foo<T> {
-  T bar;
-  Foo(this.bar);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) || other is Foo && other.bar == bar;
-
-  @override
-  int get hashCode => bar.hashCode;
-}
+import 'util.dart';
 
 void main() {
   group('isX', () {
@@ -28,7 +17,7 @@ void main() {
       test('isRight on a Left fails the test', () {
         Either left = Left(null);
         expect(left.isLeft(), isTrue);
-        expect(() => expect(left, isRight), throwsA(isA<TestFailure>()));
+        expect(() => expect(left, isRight), failsTheTest());
       });
     });
 
@@ -42,7 +31,7 @@ void main() {
       test('isLeft on a Right fails the test', () {
         Either right = Right(null);
         expect(right.isRight(), true);
-        expect(() => expect(right, isLeft), throwsA(isA<TestFailure>()));
+        expect(() => expect(right, isLeft), failsTheTest());
       });
     });
   });
@@ -65,21 +54,21 @@ void main() {
     test('getRight on Right returns the underlying value', () {
       Either right = Right("foo");
 
-      expect(right.getRight(), equals("foo"));
+      expect(right.getRightOrFailTest(), equals("foo"));
     });
     test('getRight on Left fails the test', () {
       Either left = Left("foo");
-      expect(() => left.getRight(), throwsA(isA<TestFailure>()));
+      expect(() => left.getRightOrFailTest(), failsTheTest());
     });
 
     test('getLeft on Left returns the underlying value', () {
       Either left = Left("foo");
 
-      expect(left.getLeft(), equals("foo"));
+      expect(left.getLeftOrFailTest(), equals("foo"));
     });
     test('getLeft on Right fails the test', () {
       Either right = Right("foo");
-      expect(() => right.getLeft(), throwsA(isA<TestFailure>()));
+      expect(() => right.getLeftOrFailTest(), failsTheTest());
     });
   });
 }
