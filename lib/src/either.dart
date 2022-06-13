@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:test/test.dart';
 
-// Matchers for the [Either] type
-
 class _IsRight extends Matcher {
   const _IsRight();
   @override
@@ -45,7 +43,7 @@ class _IsRightOf extends Matcher {
 /// ```dart
 /// Either<Failure, String> either = fetchData();
 ///
-/// either.fold((l) => throw Exception(), (r) => expect(r, equals('foo')));
+/// either.fold((_) => throw TestFailure('Either should be right'), (r) => expect(r, equals('foo')));
 /// ```
 ///
 /// is equivalent to :
@@ -55,12 +53,71 @@ class _IsRightOf extends Matcher {
 ///
 /// expect(either, isRightOf('foo'))
 /// ```
-///
-///
 Matcher isRightOf(Object? expected) => _IsRightOf(expected);
 
-class EitherIsLeftError extends Error {}
+class _IsLeft extends Matcher {
+  const _IsLeft();
+  @override
+  Description describe(Description description) => description.add("left");
+  @override
+  bool matches(Object? item, Map matchState) => (item as Either).isLeft();
+}
+
+/// Matches if the object is of type Left.
+///
+/// Example :
+///
+/// The following test is successfull if and only if `either.isLeft()`
+/// returns `true`
+/// ```dart
+/// Either<Failure, String> either = fetchData();
+///
+/// expect(either, isLeft); // Passes the test if `either.isLeft()` returns true
+/// ```
+const Matcher isLeft = _IsLeft();
+
+class _IsLeftOf extends Matcher {
+  final Object? _expected;
+  const _IsLeftOf(this._expected);
+  @override
+  bool matches(Object? item, Map matchState) =>
+      (item as Either).fold((l) => l == _expected, (r) => false);
+
+  @override
+  Description describe(Description description) => description
+      .add('a left instance that is equal to')
+      .addDescriptionOf(_expected);
+}
+
+/// Returns a matcher that matches if the object is of type [Left] and the
+/// underlying value is equal to the argument
+///
+/// Example :
+///
+/// ```dart
+/// Either<Failure, String> either = fetchData();
+///
+/// either.fold((l) => expect(l, equals('foo')), (_) => throw TestFailure('Either should be left'));
+/// ```
+///
+/// is equivalent to :
+///
+/// ```dart
+/// Either<Failure, String> either = fetchData();
+///
+/// expect(either, isLeftOf('foo'))
+/// ```
+Matcher isLeftOf(Object? expected) => _IsLeftOf(expected);
 
 extension EitherX<L, R> on Either<L, R> {
-  R getOrCrash() => getOrElse(() => throw EitherIsLeftError());
+  /// Returns the right value of an [Either], or fails the test.
+  ///
+  /// To use only in tests.
+  R getRight() => getOrElse(() => throw TestFailure('Either should be right'));
+
+  /// Returns the left value of an [Either], or fails the test.
+  ///
+  /// To use only in tests.
+  L getLeft() =>
+      swap().getOrElse(() => throw TestFailure('Either should be left'));
 }
