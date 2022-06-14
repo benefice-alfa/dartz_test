@@ -20,12 +20,10 @@ test('either is right', () {
 
     expect(either, isRight);
     expect(either, isRightOf('foo'));
-
     expect(either, isRightThat(equals('foo')));
 
-    var right = either.getRightOrFailTest();
-    expect(right, equals('foo'));
-
+    var value = either.getRightOrFailTest();
+    expect(value, equals('foo'));
   });
 ```
 
@@ -46,8 +44,8 @@ The same matchers exist for `Left`
     expect(option, isSomeOf('foo'));
     expect(option, isSomeThat(equals('foo')));
 
-    var foo = option.getOrFailTest();
-    expect(foo, equals('foo'));
+    var value = option.getOrFailTest();
+    expect(value, equals('foo'));
   });
 ```
 

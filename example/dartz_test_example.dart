@@ -8,11 +8,10 @@ void main() {
 
     expect(either, isRight);
     expect(either, isRightOf('foo'));
-
     expect(either, isRightThat(equals('foo')));
 
-    var right = either.getRightOrFailTest();
-    expect(right, equals('foo'));
+    var value = either.getRightOrFailTest();
+    expect(value, equals('foo'));
   });
 
   test('option is none', () {
@@ -27,7 +26,7 @@ void main() {
     expect(option, isSomeOf('foo'));
     expect(option, isSomeThat(equals('foo')));
 
-    var foo = option.getOrFailTest();
-    expect(foo, equals('foo'));
+    var value = option.getOrFailTest();
+    expect(value, equals('foo'));
   });
 }
