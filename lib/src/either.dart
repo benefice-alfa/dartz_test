@@ -35,8 +35,8 @@ class _IsRightOf extends Matcher {
       .addDescriptionOf(_expected);
 }
 
-/// Returns a matcher that matches if the object is of type [Right] and the
-/// underlying value is equal to the argument
+/// Returns a matcher that matches if the actual object is of type [Right] and the
+/// underlying value is equal to the expected value.
 ///
 /// Example :
 ///
@@ -89,8 +89,8 @@ class _IsLeftOf extends Matcher {
       .addDescriptionOf(_expected);
 }
 
-/// Returns a matcher that matches if the object is of type [Left] and the
-/// underlying value is equal to the argument
+/// Returns a matcher that matches if the actual object is of type [Left] and
+/// it's underlying value is equal to the expected value.
 ///
 /// Example :
 ///
