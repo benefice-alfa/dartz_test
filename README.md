@@ -8,14 +8,38 @@ Provides matchers to help unit-testing your apps when using functional programmi
 
 ## Usage
 
+### Eithers
+
 ```dart
-Either<Failure, String> mustBeRight = mockFetchData();
+test('either is right', () {
+    Either either = Right('foo');
 
-expect(mustBeRight, isRight);
+    expect(either, isRight);
+    expect(either, isRightOf('foo'));
 
-mustBeRight = Right('foo');
+    var right = either.getRightOrFailTest();
+    expect(right, equals('foo'));
+  });
+```
 
-expect(mustBeRight, isRightOf('foo'));
+The same matchers exist for `Left`
+
+### Options
+
+```dart
+  test('option is none', () {
+    Option option = None();
+    expect(option, isNone);
+  });
+
+  test('option is Some', () {
+    Option option = Some('foo');
+    expect(option, isSomeOf('foo'));
+
+    var foo = option.getOrFailTest();
+
+    expect(foo, equals('foo'));
+  });
 ```
 
 ## Additional information

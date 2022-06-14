@@ -73,5 +73,6 @@ Matcher isSomeOf(Object expected) => _IsSomeOf(expected);
 
 extension OptionX<T> on Option<T> {
   /// Returns the value or makes the test fail.
-  T getOrFail() => getOrElse(() => throw TestFailure('option should be Some'));
+  T getOrFailTest() =>
+      getOrElse(() => throw TestFailure('option should be Some'));
 }

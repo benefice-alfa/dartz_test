@@ -3,3 +3,4 @@
 library dartz_test;
 
 export 'src/either.dart';
+export 'src/option.dart';

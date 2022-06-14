@@ -40,12 +40,12 @@ void main() {
     option.fold(() => throw TestFailure("option should be Some"),
         (a) => expect(a, equals(1)));
 
-    expect(option.getOrFail(), equals(1));
+    expect(option.getOrFailTest(), equals(1));
   });
 
-  test('getOrFail on None fails the test', () {
+  test('getOrFailTest on None fails the test', () {
     Option option = None();
 
-    expect(() => option.getOrFail(), failsTheTest());
+    expect(() => option.getOrFailTest(), failsTheTest());
   });
 }
