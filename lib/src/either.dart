@@ -1,3 +1,5 @@
+// dart pub global run coverage:test_with_coverage
+
 import 'package:dartz/dartz.dart';
 import 'package:test/test.dart';
 
@@ -121,4 +123,26 @@ extension EitherX<L, R> on Either<L, R> {
   /// To use only in tests.
   L getLeftOrFailTest() =>
       swap().getOrElse(() => throw TestFailure('Either should be left'));
+}
+
+/// Matcher that tries to extract the right value of an [Either] instance to match
+/// it against [matcher]
+///
+/// The test fails if the actual value is a [Left]
+// ignore: camel_case_types
+class isRightThat extends CustomMatcher {
+  isRightThat(matcher) : super("Either whose right value is", "right", matcher);
+  @override
+  Object? featureValueOf(actual) => (actual as Right).value;
+}
+
+/// Matcher that tries to extract the left value of an [Either] instance to match
+/// it against [matcher]
+///
+/// The test fails if the actual value is a [Right]
+// ignore: camel_case_types
+class isLeftThat extends CustomMatcher {
+  isLeftThat(matcher) : super("Either whose left value is", "left", matcher);
+  @override
+  Object? featureValueOf(actual) => (actual as Left).value;
 }

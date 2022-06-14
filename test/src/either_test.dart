@@ -49,6 +49,73 @@ void main() {
       expect(left, isLeftOf(Foo('bar')));
     });
   });
+  group('XThat', () {
+    group('isRightThat', () {
+      test(
+          'isRightThat passes the test when actual value is Right and matcher matches the right value',
+          () {
+        Either either = Right(null);
+
+        expect(either, isRightThat(isNull));
+      });
+      test(
+          "isRightThat fails the test when actual value is Right but matcher doesn't match the right value",
+          () {
+        Either either = Right(null);
+
+        mustFailTest() => expect(either, isRightThat(isNotNull));
+
+        expect(mustFailTest, failsTheTest());
+      });
+      test(
+          'isRightThat fails the test when mather matches the right value but the actual value is Left',
+          () {
+        Either either = Left(null);
+        mustFailTest() => expect(either, isRightThat(isNull));
+        expect(mustFailTest, failsTheTest());
+      });
+      test(
+          "isRightThat fails the test when mather doesn't match the right value and the actual value is Left",
+          () {
+        Either either = Left(null);
+        mustFailTest() => expect(either, isRightThat(isNotNull));
+        expect(mustFailTest, failsTheTest());
+      });
+    });
+    group('isLeftThat', () {
+      test(
+          'isLeftThat passes the test when actual value is Left and matcher matches the left value',
+          () {
+        Either either = Left(null);
+
+        expect(either, isLeftThat(isNull));
+      });
+      test(
+          "isLeftThat fails the test when actual value is Right but matcher doesn't match the Right value",
+          () {
+        Either either = Left(null);
+
+        mustFailTest() => expect(either, isLeftThat(isNotNull));
+
+        expect(mustFailTest, failsTheTest());
+      });
+
+      test(
+          'isLeftThat fails the test when mather matches the left value but the actual value is Right',
+          () {
+        Either either = Right(null);
+        mustFailTest() => expect(either, isLeftThat(isNull));
+        expect(mustFailTest, failsTheTest());
+      });
+      test(
+          "isLeftThat fails the test when mather doesn't match the left value and the actual value is Right",
+          () {
+        Either either = Right(null);
+        mustFailTest() => expect(either, isLeftThat(isNotNull));
+        expect(mustFailTest, failsTheTest());
+      });
+    });
+  });
 
   group('right and left getters', () {
     test('getRight on Right returns the underlying value', () {

@@ -76,3 +76,15 @@ extension OptionX<T> on Option<T> {
   T getOrFailTest() =>
       getOrElse(() => throw TestFailure('option should be Some'));
 }
+
+/// Matcher that tries to extract the value of a [Some] instance to match
+/// it against [matcher]
+///
+/// The test fails if the actual value is a [None]
+// ignore: camel_case_types
+class isSomeThat extends CustomMatcher {
+  isSomeThat(matcher)
+      : super("Option that holds a value that is", "some", matcher);
+  @override
+  Object? featureValueOf(actual) => (actual as Some).value;
+}
