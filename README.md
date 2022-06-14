@@ -1,5 +1,9 @@
 Provides matchers to help unit-testing your apps when using functional programming types defined in the dartz package.
 
+---
+
+[![codecov](https://codecov.io/gh/SuperMuel/dartz_test/branch/main/graph/badge.svg?token=5HERRNTPSI)](https://codecov.io/gh/SuperMuel/dartz_test)
+
 ## Getting started
 
 ### Installation :
