@@ -1,4 +1,4 @@
-Provides matchers to help unit-testing your apps when using functional programming types defined in the dartz package.
+Provides matchers to help unit-testing your apps when using functional programming types defined in the [dartz](https://pub.dev/packages/dartz) package.
 
 ---
 
