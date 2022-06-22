@@ -91,7 +91,8 @@ class _IsSomeOf extends Matcher {
 /// ```
 Matcher isSomeOf(Object expected) => _IsSomeOf(expected);
 
-extension OptionX<T> on Option<T> {
+/// Extension on [Option] type to use in tests.
+extension TestOptionX<T> on Option<T> {
   /// Returns the value or makes the test fail.
   T getOrFailTest() =>
       getOrElse(() => throw TestFailure('option should be Some'));

@@ -1,3 +1,7 @@
+## 0.1.0
+
+- More docs, and renaming for the tests extensions
+
 ## 0.0.4
 
 - Same on `isSomeOf`

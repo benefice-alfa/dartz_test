@@ -168,7 +168,8 @@ class _IsLeftOf extends Matcher {
 ///
 Matcher isLeftOf(Object? expected) => _IsLeftOf(expected);
 
-extension EitherX<L, R> on Either<L, R> {
+/// Extension on [Either] type to use in tests.
+extension TestEitherX<L, R> on Either<L, R> {
   /// Returns the right value of an [Either], or fails the test.
   ///
   /// To use only in tests.
