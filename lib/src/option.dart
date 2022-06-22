@@ -69,6 +69,26 @@ class _IsSomeOf extends Matcher {
 /// expect(option, isNot(isSomeOf(42)));
 /// ```
 ///
+///  **This matcher hasn't the same behavior than the `equals` matcher when
+/// comparing the two values** :
+///
+/// ```dart
+/// test(
+///    "`isSomeOf` works with == and not the `equals` matcher",
+///    () {
+///      var list1 = ['foo'];
+///      var list2 = ['foo'];
+///
+///    Either either = Right(list1);
+///
+///    //! Because list1 != list2, this line doesn't pass the test
+///    expect(either, isSomeOf(list2));
+///
+///    // Use `isSomeThat` instead
+///    expect(either, isSomeThat(equals(list2)));
+///    }
+///  )
+/// ```
 Matcher isSomeOf(Object expected) => _IsSomeOf(expected);
 
 extension OptionX<T> on Option<T> {

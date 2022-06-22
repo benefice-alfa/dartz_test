@@ -21,20 +21,33 @@ void main() {
   });
 
   group('isSomeOf', () {
-    test('isSomeOf(the same value)', () {
+    test('isSomeOf(an == value)', () {
       Option option = Some(Foo('bar'));
-      option.fold(() => throw TestFailure("option should be Some"),
-          (a) => expect(a, equals(Foo('bar'))));
 
+      expect((option as Some).value == Foo('bar'), isTrue);
       expect(option, isSomeOf(Foo('bar')));
     });
 
-    test('isSomeOf(a different value)', () {
+    test("isSomeOf(an 'not ==' value)", () {
       Option option = Some(Foo('bar'));
-      option.fold(() => throw TestFailure("option should be Some"),
-          (a) => expect(a, isNot(equals(Foo('foo')))));
 
+      expect((option as Some).value != Foo('foo'), isTrue);
       expect(option, isNot(isSomeOf(Foo('foo'))));
+    });
+
+    test(
+        'Comparing two objects equal with the `equal` matcher but not with == fails the test ',
+        () {
+      var list1 = ['foo'];
+      var list2 = ['foo'];
+
+      expect(list1 == list2, isFalse);
+      expect(list1, equals(list2));
+
+      Option left = Some(list1);
+
+      mustFail() => expect(left, isSomeOf(list2));
+      expect(mustFail, failsTheTest());
     });
   });
 
@@ -70,7 +83,7 @@ void main() {
       expect(mustFailTest, failsTheTest());
     });
 
-    test('isSomeThat on None whose fails the test', () {
+    test('isSomeThat on None fails the test', () {
       Option option = None();
       mustFailTest() => expect(option, isSomeThat(anything));
       expect(mustFailTest, failsTheTest());
