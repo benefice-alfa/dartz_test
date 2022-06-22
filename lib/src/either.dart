@@ -37,15 +37,16 @@ class _IsRightOf extends Matcher {
       .addDescriptionOf(_expected);
 }
 
-/// Returns a matcher that matches if the actual object is of type [Right] and the
-/// underlying value is equal to the expected value.
+/// Returns a matcher that matches if the actual object is of type [Right] and
+/// the underlying value is equal (for ==) to the expected value.
 ///
 /// Example :
 ///
 /// ```dart
 /// Either<Failure, String> either = fetchData();
 ///
-/// either.fold((_) => throw TestFailure('Either should be right'), (r) => expect(r, equals('foo')));
+/// expect((either as Right).value == 'foo', isTrue);
+///
 /// ```
 ///
 /// is equivalent to :
@@ -54,6 +55,33 @@ class _IsRightOf extends Matcher {
 /// Either<Failure, String> either = fetchData();
 ///
 /// expect(either, isRightOf('foo'))
+/// ```
+///
+/// **This matcher hasn't the same behavior than the `equals` matcher when
+/// comparing the two values** :
+///
+/// ```dart
+/// test("isRightOf work with == and not the 'equals' matcher", () {
+///    var list1 = ['foo'];
+///    var list2 = ['foo'];
+///
+///    // Unless list1 and list2 are declared with const in this example, list1 != list2
+///    // This line passes the test
+///    expect(list1 == list2, isFalse);
+///
+///    // But the `equals` matcher compares the two lists item by item.
+///    // This line passes the test
+///    expect(list1, equals(list2));
+///
+///    Either either = Right(list1);
+///
+///    //! Because list1 != list2, this line doesn't pass the test
+///    expect(either, isRightOf(list2));
+///
+///    // Use `isRightThat` instead
+///    expect(either, isRightThat(equals(list2)));
+///
+///  });
 /// ```
 Matcher isRightOf(Object? expected) => _IsRightOf(expected);
 
@@ -92,14 +120,15 @@ class _IsLeftOf extends Matcher {
 }
 
 /// Returns a matcher that matches if the actual object is of type [Left] and
-/// it's underlying value is equal to the expected value.
+/// the underlying value is equal (for ==) to the expected value.
 ///
 /// Example :
 ///
 /// ```dart
 /// Either<Failure, String> either = fetchData();
 ///
-/// either.fold((l) => expect(l, equals('foo')), (_) => throw TestFailure('Either should be left'));
+/// expect((either as Left).value == 'foo', isTrue);
+///
 /// ```
 ///
 /// is equivalent to :
@@ -109,6 +138,34 @@ class _IsLeftOf extends Matcher {
 ///
 /// expect(either, isLeftOf('foo'))
 /// ```
+///
+/// **This matcher hasn't the same behavior than the `equals` matcher when
+/// comparing the two values** :
+///
+/// ```dart
+/// test("isLefttOf work with == and not the 'equals' matcher", () {
+///    var list1 = ['foo'];
+///    var list2 = ['foo'];
+///
+///    // Unless list1 and list2 are declared with const in this example, list1 != list2
+///    // This line passes the test
+///    expect(list1 == list2, isFalse);
+///
+///    // But the `equals` matcher compares the two lists item by item.
+///    // This line passes the test
+///    expect(list1, equals(list2));
+///
+///    Either either = Left(list1);
+///
+///    //! Because list1 != list2, this line doesn't pass the test
+///    expect(either, isLefttOf(list2));
+///
+///    // Use `isRightThat` instead
+///    expect(either, isLefttThat(equals(list2)));
+///
+///  });
+/// ```
+///
 Matcher isLeftOf(Object? expected) => _IsLeftOf(expected);
 
 extension EitherX<L, R> on Either<L, R> {

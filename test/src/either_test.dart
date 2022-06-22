@@ -36,17 +36,61 @@ void main() {
     });
   });
   group('isXOf', () {
-    test('isRightOf', () {
-      Either right = Right(Foo('bar'));
-      right.fold((l) => throw Error(), (r) => expect(r, equals(Foo('bar'))));
-      expect(right, isRightOf(Foo('bar')));
+    group('isRightOf', () {
+      test('Passes the test with an == instance', () {
+        Either right = Right(Foo('bar'));
+        expect((right as Right).value, equals(Foo('bar')));
+        expect(right, isRightOf(Foo('bar')));
+      });
+      test("Fails the test with a 'not ==' instance", () {
+        Either right = Right(Foo('🍣'));
+        expect((right as Right).value, isNot(equals(Foo('bar'))));
+        mustFailTest() => expect(right, isRightOf(Foo('bar')));
+        expect(mustFailTest, failsTheTest());
+      });
+
+      test(
+          'Comparing two objects equal with the `equal` matcher but not with == fails the test ',
+          () {
+        var list1 = ['foo'];
+        var list2 = ['foo'];
+
+        expect(list1 == list2, isFalse);
+        expect(list1, equals(list2));
+
+        Either right = Right(list1);
+
+        mustFail() => expect(right, isRightOf(list2));
+        expect(mustFail, failsTheTest());
+      });
     });
 
-    test('isLeftOf', () {
-      Either left = Left(Foo('bar'));
+    group('isLeftOf', () {
+      test('Passes the test with an == instance', () {
+        Either left = Left(Foo('bar'));
+        expect((left as Left).value, equals(Foo('bar')));
+        expect(left, isLeftOf(Foo('bar')));
+      });
+      test("Fails the test with a 'not ==' instance", () {
+        Either left = Left(Foo('🍣'));
+        expect((left as Left).value, isNot(equals(Foo('bar'))));
+        mustFailTest() => expect(left, isLeftOf(Foo('bar')));
+        expect(mustFailTest, failsTheTest());
+      });
+      test(
+          'Comparing two objects equal with the `equal` matcher but not with == fails the test ',
+          () {
+        var list1 = ['foo'];
+        var list2 = ['foo'];
 
-      left.fold((l) => expect(l, equals(Foo('bar'))), (_) => throw Error());
-      expect(left, isLeftOf(Foo('bar')));
+        expect(list1 == list2, isFalse);
+        expect(list1, equals(list2));
+
+        Either left = Left(list1);
+
+        mustFail() => expect(left, isLeftOf(list2));
+        expect(mustFail, failsTheTest());
+      });
     });
   });
   group('XThat', () {

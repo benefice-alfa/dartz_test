@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 
 Matcher failsTheTest() => throwsA(isA<TestFailure>());
 
-// To check the use of == and not only 'identical'
+/// A simple dataclass implementing the == comparison
 class Foo<T> {
   T bar;
   Foo(this.bar);
