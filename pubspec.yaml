@@ -2,7 +2,7 @@ name: dartz_test
 description: Provides matchers to help unit-testing your apps when using functional programming types defined in the dartz package.
 repository: https://github.com/SuperMuel/dartz_test
 
-version: 0.0.3
+version: 0.0.4
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
