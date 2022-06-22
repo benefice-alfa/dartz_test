@@ -63,4 +63,17 @@ void main() {
     var value = option.getOrFailTest();
     expect(value, equals('foo'));
   });
+
+  test("`isSomeOf` works with == and not the `equals` matcher", () {
+    var list1 = ['foo'];
+    var list2 = ['foo'];
+
+    Either either = Right(list1);
+
+    //! Because list1 != list2, this line doesn't pass the test
+    expect(either, isSomeOf(list2));
+
+    // Use `isSomeThat` instead
+    expect(either, isSomeThat(equals(list2)));
+  });
 }
