@@ -49,7 +49,3 @@ The same matchers exist for `Left`
     expect(value, equals('foo'));
   });
 ```
-
-## Additional information
-
-Don't expect anything from this package for now.
