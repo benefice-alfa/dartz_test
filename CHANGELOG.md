@@ -1,3 +1,7 @@
+## 0.1.1
+
+- 100% test coverage
+
 ## 0.1.0
 
 - More docs, and renaming for the tests extensions

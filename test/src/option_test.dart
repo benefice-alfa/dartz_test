@@ -5,6 +5,20 @@ import 'package:test/test.dart';
 import 'util.dart';
 
 void main() {
+  group('isNone', () {
+    test('isNone on Some passes the test', () {
+      Option option = None();
+      expect(option.isNone(), true);
+      expect(option, isNone);
+    });
+
+    test('isNone on Some fails the test', () {
+      Option option = Some(1);
+      expect(option.isSome(), isTrue);
+
+      expect(() => expect(option, isNone), failsTheTest());
+    });
+  });
   group('isSome', () {
     test('isSome on Some passes the test', () async {
       Option option = Some(1);
