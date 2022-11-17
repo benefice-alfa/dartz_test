@@ -4,6 +4,8 @@ Provides matchers to help unit-testing your apps when using functional programmi
 
 [![codecov](https://codecov.io/gh/SuperMuel/dartz_test/branch/main/graph/badge.svg?token=5HERRNTPSI)](https://codecov.io/gh/SuperMuel/dartz_test)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![Pub badge](https://img.shields.io/pub/v/dartz_test)](https://pub.dev/packages/dartz_test)
+
 
 ## Getting started
 
